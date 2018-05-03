@@ -13,8 +13,9 @@ module.exports = function(ctx) {
     NODE_MODULES_DIR = path.join(projectRoot, "node_modules");
   }
 
-  var xml2js = require(path.join(NODE_MODULES_DIR, 'xml2js'));
-
+  var minimist = requireCordovaModule('minimist');
+  var xml2js = requireCordovaModule('xml2js');
+  
   return Q.Promise(function(resolve, reject, notify) {
     //---------------------------
     // Read the config.xml file
