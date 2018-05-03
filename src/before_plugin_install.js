@@ -1,8 +1,33 @@
-module.exports = function(ctx) {
+#!/usr/bin/env node
 
+// Adapted from:
+// https://github.com/AllJoyn-Cordova/cordova-plugin-alljoyn/blob/master/scripts/beforePluginInstall.js
+
+// XXX FUTURE TBD auto-detect:
+var package_name = 'cordova-plugin-googlemaps';
+
+module.exports = function (ctx) {
   var fs = ctx.requireCordovaModule('fs'),
       path = ctx.requireCordovaModule('path'),
       Q = ctx.requireCordovaModule('q');
+    var exec = require('child_process').exec;
+    var deferral = new Q.defer();
+    console.log('installing external dependencies via npm');
+    exec(   'npm install', {cwd: path.join('plugins', package_name)},
+            function (error, stdout, stderr) {
+                if (error !== null) {
+                    // XXX TODO SIGNAL FAILURE HERE.
+                    console.log('npm install of external dependencies failed: ' + error);
+                    deferral.resolve();
+                } else {
+                    console.log('npm install of external dependencies ok');
+                    deferral.resolve();
+                }
+            }
+    );
+    return deferral.promise;
+
+  
   var projectRoot = ctx.opts.projectRoot,
     configXmlPath = path.join(projectRoot, 'config.xml'),
     pluginXmlPath = path.join(__dirname, '..', 'plugin.xml'),
