@@ -57,6 +57,7 @@ module.exports = function(ctx) {
     });
   })
   .then(function(configXmlData) {
+    console.log("Replacing variables in config.xml");
     //------------------------------------------------------------------------------
     // Check the xml data.
     // If there is no definition of this plugin in the config.xml,
@@ -223,7 +224,7 @@ module.exports = function(ctx) {
       params.pluginXmlTxt = params.pluginXmlTxt.replace(/\$([A-Z0-9\_]+)/g, function(matchWhole, varName) {
         return variables[varName] || matchWhole;
       });
-
+      console.log("Writting plugin XML");
       fs.writeFile(pluginXmlPath, params.pluginXmlTxt, 'utf8', function(error) {
         if (error) {
           reject(error);
@@ -233,5 +234,6 @@ module.exports = function(ctx) {
       });
     });
   });
-
+  
+  console.log("Done!");
 };
