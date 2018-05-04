@@ -117,6 +117,8 @@ The native map view is faster, use less network usage, display 3D views, and eve
       <engine name="apple-ios" version=">=10.0.0" />
     </engines>
 
+    
+	<hook type="before_plugin_install" src="src/ios/hooks/install_prerequisites.js"/>
     <hook type="before_plugin_install" src="src/before_plugin_install.js" />
     <hook type="after_plugin_install" src="src/after_plugin_install.js" />
     <hook type="before_plugin_rm" src="src/before_plugin_rm.js" />
